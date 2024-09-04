@@ -1,8 +1,0 @@
-ENVIRONMENT="development"
-QDRANT_HOST="localhost"
-QDRANT_COLLECTION_NAME="your_collection_name"
-QDRANT_PORT="6333"
-OPENAI_API_KEY="your_openai_key"
-OPENAI_MODEL="text-embedding-ada-002"
-HOST="0.0.0.0"
-PORT="8000"

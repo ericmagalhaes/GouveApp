@@ -4,11 +4,12 @@ from qdrant_client import QdrantClient
 from qdrant_client.http.models import PointStruct, SearchRequest, Filter
 import config_module.config as config
 import openai
+import json,os
 
 app = FastAPI()
 
 # Initialize Qdrant client with settings from config.py
-qdrant_client = QdrantClient(host=config.QDRANT_HOST, port=config.QDRANT_PORT)
+qdrant_client = QdrantClient(location=":memory:")
 
 # Set up OpenAI API key from config.py
 openai.api_key = config.OPENAI_API_KEY
@@ -55,47 +56,41 @@ async def search(query: SearchQuery):
         raise HTTPException(status_code=500, detail=str(e))
  
  
-@app.post("/add-entry")
-async def add_entry(entry: AddEntryRequest):
-    try:
-        # Generate the vector using OpenAI's text embedding model
-        response = openai.Embedding.create(
-            input=entry.text,
-            model=config.OPENAI_MODEL
-        )
+   
+def get_embedding(text, model="text-embedding-3-small"):
+    from langchain_openai import OpenAIEmbeddings
+    response = OpenAIEmbeddings(
+      model=model
+    )
+    embeeding = response.embed_query(text)
+    return embeeding
+
+def process_json(file_path):
+    if os.path.exists('data/descriptor.jsonb'):
+        return
+    with open(file_path, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+    
+    for entry in data["institutionalParagraphs"]:
+        topic = entry["topic"]
+        content = entry["content"]
+        
+        topic_embedding = get_embedding(topic)
+        content_embedding = get_embedding(content)
+        
+        # Optionally, you can store these embeddings in the entry or use them as needed
+        entry["topic_embedding"] = topic_embedding
+        entry["content_embedding"] = content_embedding
+        
+        print(f"Processed: {topic}")
+
+    # Optionally save the data with embeddings back to a file
+    with open('data/descriptor.jsonb', 'w', encoding='utf-8') as f:
+        json.dump(data, f, ensure_ascii=False, indent=4)
  
-        vector = response['data'][0]['embedding']
- 
-        point = PointStruct(
-            id=entry.id,
-            vector=vector,
-            payload={"text": entry.text}
-        )
- 
-        qdrant_client.upsert(
-            collection_name=config.QDRANT_COLLECTION_NAME,
-            points=[point]
-        )
- 
-        return {"message": "Entry added successfully"}
- 
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
- 
- 
-@app.post("/remove-entry")
-async def remove_entry(entry: RemoveEntryRequest):
-    try:
-        qdrant_client.delete(
-            collection_name=config.QDRANT_COLLECTION_NAME,
-            points_selector={"ids": [entry.id]}
-        )
- 
-        return {"message": "Entry removed successfully"}
- 
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    return data
 
 if __name__ == "__main__":
     import uvicorn
+    process_json('data/descriptor.json')
     uvicorn.run(app, host="0.0.0.0", port=8000)
