@@ -37,19 +37,21 @@ async def search(query: SearchQuery):
     try:
         query_vector = get_embedding(query.query)
 
-        search_results = qdrant_client.search(
+        response = qdrant_client.query_points(
             collection_name=config.QDRANT_COLLECTION_NAME,
-            query_vector=query_vector,
-            query_filter=None,
-            limit=query.limit
+            query=query_vector,
+            limit=query.limit 
         )
 
-        results = [
-            {"id": result.id, "score": result.score, "payload": result.payload}
-                for result in search_results
-        ]
-
-        return {"results": results}
+        # Check the response and extract results
+        if response:
+            results = [
+                {"id": result.id, "score": result.score, "payload": result.payload}
+                for result in response.points
+            ]
+            return {"results": results}
+        else:
+            raise ValueError(f"Failed to query points")
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
