@@ -30,30 +30,23 @@ class RemoveEntryRequest(BaseModel):
 # Define the request body model for search
 class SearchQuery(BaseModel):
     query: str
-
+    limit: int = 10
 
 @app.post("/search")
 async def search(query: SearchQuery):
     try:
-        # Perform a hybrid search on Qdrant
-        search_request = SearchRequest(
-            query_vector=None,  # Hybrid search can use `query_vector` + `filter`
-            filter=Filter(
-                must=[
-                    {"key": "text", "match": {"text": query.query}}
-                ]  # Example filter for the text field
-            ),
-            limit=10,  # Number of results to return
-        )
+        query_vector = get_embedding(query.query)
 
         search_results = qdrant_client.search(
-            collection_name=config.QDRANT_COLLECTION_NAME, request=search_request
+            collection_name=config.QDRANT_COLLECTION_NAME,
+            query_vector=query_vector,
+            query_filter=None,
+            limit=query.limit
         )
 
-        # Process and return the results
         results = [
             {"id": result.id, "score": result.score, "payload": result.payload}
-            for result in search_results
+                for result in search_results
         ]
 
         return {"results": results}
@@ -62,7 +55,7 @@ async def search(query: SearchQuery):
         raise HTTPException(status_code=500, detail=str(e))
 
 
-def get_embedding(text, model="text-embedding-3-small"):
+def get_embedding(text, model=config.OPENAI_MODEL):
     from langchain_openai import OpenAIEmbeddings
 
     response = OpenAIEmbeddings(model=model)
