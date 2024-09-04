@@ -13,7 +13,7 @@ QDRANT_HOST = os.getenv('QDRANT_HOST', 'localhost')
 QDRANT_PORT = int(os.getenv('QDRANT_PORT', '6333'))
 
 # Qdrant collection name
-QDRANT_COLLECTION_NAME = os.getenv('QDRANT_COLLECTION_NAME', 'your_collection_name')
+QDRANT_COLLECTION_NAME = os.getenv('QDRANT_COLLECTION_NAME', 'cacao_show_collection')
 
 # Server settings
 HOST = os.getenv('HOST', '0.0.0.0')
