@@ -56,6 +56,12 @@ async def search(query: SearchQuery):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+@app.post("/init")
+async def search(query: SearchQuery):
+    process_json("data/descriptor.json")
+    restore_db()
+    return {"message": "initiated"}
+
 
 def get_embedding(text, model=config.OPENAI_MODEL):
     from langchain_openai import OpenAIEmbeddings
@@ -125,7 +131,6 @@ def process_json(file_path):
 
 if __name__ == "__main__":
     import uvicorn
-
     process_json("data/descriptor.json")
     restore_db()
     uvicorn.run(app, host="0.0.0.0", port=8000)
