@@ -2,9 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import annyang from 'annyang';
 import axios from 'axios';
 import { API_URL, KEYWORD_TRIGGER, LOCALE } from './config';
-import './App.css';
 
-const App: React.FC = () => {
+export const App: React.FC = () => {
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
 
   const handleSpeechInput = useCallback((input: string) => {
@@ -68,5 +67,3 @@ const App: React.FC = () => {
     </div>
   );
 };
-
-export default App;
