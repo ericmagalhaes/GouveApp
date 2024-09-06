@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import annyang from 'annyang';
-import axios from 'axios';
-import { API_URL, KEYWORD_TRIGGER, LOCALE } from './config';
+import { axiosClient } from './axios';
+import { KEYWORD_TRIGGER, LOCALE } from './config';
 
 export const App: React.FC = () => {
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
 
   const handleSpeechInput = useCallback((input: string) => {
-    axios.post(`${API_URL}/search`, {
+    axiosClient.post('/search', {
       query: input,
     })
       .then((response) => {
