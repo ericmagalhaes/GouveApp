@@ -6,9 +6,18 @@ from qdrant_client.http.models import PointStruct, SearchRequest, Filter
 import config_module.config as config
 import openai
 import json, os
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
+# Allow all origins, methods, and headers
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods (GET, POST, PUT, etc.)
+    allow_headers=["*"],  # Allows all headers
+)
 # Initialize Qdrant client with settings from config.py
 qdrant_client = QdrantClient(location=":memory:")
 
