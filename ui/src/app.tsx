@@ -10,9 +10,9 @@ export const App: React.FC = () => {
     axiosClient.post('/search', {
       query: input,
     })
-      .then((response) => {
+      .then((response: any) => {
         console.log(response);
-        setVideoUrl('http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4');
+        setVideoUrl(response.data.results[0].payload.video);
       })
       .catch((error) => {
         console.error(error);
