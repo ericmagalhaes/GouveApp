@@ -9,6 +9,7 @@ FROM python:3.11
 WORKDIR /app
 COPY /app /app
 COPY --from=build-frontend /ui/build /app/static
+COPY --from=build-frontend /ui/build/static /app/static
 RUN pip install -r requirements.txt
 EXPOSE 80
 CMD ["gunicorn","-k","uvicorn.workers.UvicornWorker", "-b", ":80","--timeout", "300", "main:app"]
