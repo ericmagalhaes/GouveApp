@@ -12,7 +12,7 @@ export const App: React.FC = () => {
     })
       .then((response: any) => {
         console.log(response);
-        setVideoUrl(response.data.results[0].payload.video);
+        setVideoUrl('/static/'+response.data.results[0].payload.video);
       })
       .catch((error) => {
         console.error(error);
