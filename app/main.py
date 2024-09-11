@@ -7,8 +7,16 @@ import config_module.config as config
 import openai
 import json, os
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from starlette.responses import FileResponse
 
 app = FastAPI()
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
+# Serve the main index.html for the React app
+@app.get("/")
+async def serve_react_app():
+    return FileResponse("static/index.html")
 
 # Allow all origins, methods, and headers
 app.add_middleware(
