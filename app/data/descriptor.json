@@ -53,7 +53,7 @@
     {
       "topic": "Estudio Jacarandá",
       "content": "Estudio Jacarandá, specialized in Retail Design, develops conceptual projects and Rollouts for major brands. He is responsible for the architectural design and strategic journey of the ShopAI CacauShow Lab space. His creative team proposes to the Shopper immersion in retail technologies mimicked in a CacauShow Store environment.",
-      "video":"Community_Cacau.mp4"
+      "video":"Partner_1_Cacau.mp4"
     },
     {
       "topic":"Solvis partner",
@@ -87,10 +87,16 @@
       "video":"Partner_7_Cacau.mp4"
     },
     {
-      "topic":"Stream Partner",
-      "content":"With StreamShop's Social Commerce solution, your brand enhances the creation of videos from your network of sellers, influencers or affiliates, connecting them directly to your ecommerce pages, offering a more real and much more interactive shopping experience for your customers, increasing the time spent in your store and increasing your sales!",
-      "video":"Partner_7_Cacau.mp4"
+      "topic":"FDRyze",
+      "content": "A FD Ryze da Fulcrum Digital é uma solução de IA poderosa que permite a interação em tempo real com avatares de IA modelados em humanos reais. Essas personas inteligentes integram-se perfeitamente aos seus sistemas, atuando como funcionários virtuais. Totalmente personalizáveis, oferecem automação avançada e tomada de decisões semelhantes às humanas, transformando operações e aumentando a eficiência em toda a sua organização.",
+      "video": "Partner_FDRYZE_Cacau_Video.mp4"
     },
+    {
+      "topic":"Parceiros",
+      "content": "Além da Fulcrum responsavel por este Avatar e a The Led parceiro responsavel pelas telas do espaço Shop AI, temos o prazer de anunciar outros parceiros: Seidor, Flowix, Sellbie, StreamShop e Solvis que também estão por aqui anunciando suas incríveis soluções com Inteligência Artificial. Não percam a oportunidade de ver essas tecnologias em ação e descobrir como elas podem transformar o seu negócio.Também Presente na Loja estão os parceiros, Estudio Jacarandá e Mão Colorida que contribuíram com a criação do Espaço Shop AI.",
+      "video": "All_Partners_Cacau_Video.mp4"
+    }
+    ,
     {
       "topic":"Welcome",
       "content":"Welcome to the ShopAI Cacau Show Lab store, a store powered by Artificial Intelligence, here you will see the main technologies integrated with Artificial Intelligence, which are taking the shopping experience in physical retail to another level, in addition to contributing, of course, to strategic decisions that really make a difference for the business.",
