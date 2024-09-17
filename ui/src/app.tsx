@@ -12,11 +12,16 @@ export const App: React.FC = () => {
     })
       .then((response: any) => {
         console.log(response);
-        setVideoUrl('/static/'+response.data.results[0].payload.video);
+        setVideoUrl('https://ryzesc01.blob.core.windows.net/videos/'+encodeURI(response.data.results[0].payload.video));
       })
       .catch((error) => {
         console.error(error);
       });
+  }, []);
+  const handleWelcome = useCallback((input: string) => {
+
+      setVideoUrl('https://ryzesc01.blob.core.windows.net/videos/Welcome.mp4');
+
   }, []);
 
   useEffect(() => {
@@ -24,6 +29,9 @@ export const App: React.FC = () => {
       const commands = {
         [`${KEYWORD_TRIGGER} *input`]: (input: string) => {
           handleSpeechInput(input);
+        },
+        [`Oi Alê`]: (input: string) => {
+          handleWelcome(input);
         },
       };
 
@@ -47,23 +55,29 @@ export const App: React.FC = () => {
   }, [videoUrl]);
 
   return (
-    <div className="h-screen w-full flex items-center justify-center">
-      {videoUrl === null && (
-        <p className="text-center">
-          "{KEYWORD_TRIGGER}..."
-        </p>
-      )}
-
-      {videoUrl !== null && (
+    <div className="h-screen w-full flex items-center justify-center player">
         <video
           autoPlay
-          controls
-          src={videoUrl}
+          controls={true}
+          src={videoUrl !== null ? videoUrl : ''}
+          muted={false}
           onEnded={() => {
             setVideoUrl(null);
           }}
+          style={{ display: videoUrl !== null ? 'block' : 'none' }}
+
         />
-      )}
+
+        <video
+        autoPlay={true}
+        controls={false}
+        loop={true}
+        src='/static/Blinking_Eyes.mp4'
+        muted={true}
+
+        style={{ display: videoUrl === null ? 'block' : 'none' }}
+      />
+
     </div>
   );
 };

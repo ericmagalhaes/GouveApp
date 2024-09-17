@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.player {
+  video {
+    height: 100%;
+    width: 536px;
+  }
+}
