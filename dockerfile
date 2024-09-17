@@ -5,7 +5,7 @@ RUN npm install
 COPY /ui ./
 ENV REACT_APP_API_URL=https://gouveapp-avgcgnh0e7gkbgfb.westus2-01.azurewebsites.net
 ENV REACT_APP_LOCALE=pt-BR
-ENV REACT_APP_KEYWORD_TRIGGER="Fale sobre"
+ENV REACT_APP_KEYWORD_TRIGGER="Alê me fala sobre"
 RUN npm run build
 
 FROM python:3.11
