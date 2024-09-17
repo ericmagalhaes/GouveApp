@@ -72,7 +72,7 @@ export const App: React.FC = () => {
         autoPlay={true}
         controls={false}
         loop={true}
-        src='/static/Blinking_Eyes.mp4'
+        src='https://ryzesc01.blob.core.windows.net/videos/Blinking_Eyes.mp4'
         muted={true}
 
         style={{ display: videoUrl === null ? 'block' : 'none' }}
